@@ -9,25 +9,26 @@
 Summary:	Python 2 library to sort imports alphabetically
 Summary(pl.UTF-8):	Narzędzie Pythona 2 do alfabetycznego sortowania listy importów
 Name:		python3-%{module}
-Version:	6.0.1
+Version:	9.0.2
 Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/isort/
 Source0:	https://files.pythonhosted.org/packages/source/i/isort/%{module}-%{version}.tar.gz
-# Source0-md5:	b5365c66250ac30d368eed25c3920918
+# Source0-md5:	d83b9145f1cc90203c1e6907ca93ad29
+Patch0:		%{module}-no-mypyc-build-dep.patch
 URL:		https://github.com/timothycrosley/isort
 BuildRequires:	python3-build
 BuildRequires:	python3-hatch-vcs
 BuildRequires:	python3-hatchling
 BuildRequires:	python3-installer
-BuildRequires:	python3-modules >= 1:3.9
-BuildRequires:	python3-setuptools
+BuildRequires:	python3-modules >= 1:3.10
 %if %{with tests}
 BuildRequires:	python3-colorama >= 0.4.6
 BuildRequires:	python3-hypothesis >= 6.10.1
 BuildRequires:	python3-hypothesmith >= 0.1.3
 BuildRequires:	python3-libcst >= 0.3.18
+BuildRequires:	python3-mypy_extensions >= 1.1.0
 BuildRequires:	python3-pytest >= 7.4.2
 # verify if needed for tests
 #BuildRequires:	python3-pip-api
@@ -36,7 +37,7 @@ BuildRequires:	python3-pytest >= 7.4.2
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
-Requires:	python3-modules >= 1:3.9
+Requires:	python3-modules >= 1:3.10
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -44,7 +45,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 isort is a Python utility / library to sort imports alphabetically,
 and automatically separated into sections and by type. It provides a
 command line utility, Python library and plugins for various editors
-to quickly sort all your imports. It requires Python 3.9+ to run but
+to quickly sort all your imports. It requires Python 3.10+ to run but
 supports formatting Python 2 code too.
 
 This package contains Python 3 library.
@@ -54,7 +55,7 @@ isort to pythonowe narzędzie/biblioteka do alfabetycznego sortowania
 importów i automatycznego dzielenia ich na sekcje i po rodzaju.
 Udostępnia narzędzie wiersza poleceń, bibliotekę Pythona i wtyczki do
 różnych edytorów, pozwalające szybko posortować importy. Wymaga do
-działania Pythona 3.9+, ale obsługuje także formatowanie kodu Pythona
+działania Pythona 3.10+, ale obsługuje także formatowanie kodu Pythona
 2.
 
 Ten pakiet zawiera bibliotekę Pythona 3.
@@ -69,7 +70,7 @@ Requires:	%{name} = %{version}-%{release}
 isort is a Python utility / library to sort imports alphabetically,
 and automatically separated into sections and by type. It provides a
 command line utility, Python library and plugins for various editors
-to quickly sort all your imports. It requires Python 3.9+ to run but
+to quickly sort all your imports. It requires Python 3.10+ to run but
 supports formatting Python 2 code too.
 
 This package contains command line utility.
@@ -79,13 +80,14 @@ isort to pythonowe narzędzie/biblioteka do alfabetycznego sortowania
 importów i automatycznego dzielenia ich na sekcje i po rodzaju.
 Udostępnia narzędzie wiersza poleceń, bibliotekę Pythona i wtyczki do
 różnych edytorów, pozwalające szybko posortować importy. Wymaga do
-działania Pythona 3.9+, ale obsługuje także formatowanie kodu Pythona
+działania Pythona 3.10+, ale obsługuje także formatowanie kodu Pythona
 2.
 
 Ten pakiet zawiera narzędzie wiersza poleceń.
 
 %prep
 %setup -q -n %{module}-%{version}
+%patch -P0 -p1
 
 %build
 %py3_build_pyproject
